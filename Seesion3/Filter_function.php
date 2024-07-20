@@ -97,6 +97,7 @@ $ip = "192.168.1.1";
 var_dump(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4));
 echo "<br>";
 
+<<<<<<< HEAD
 /*
     Filter Functions
 
@@ -230,3 +231,9 @@ echo "<br>";
     <input type="text" name="num">
     <input type="submit" name="SEND">
 </form>
+=======
+$mac = "00:00:5e:00d:53:af";
+var_dump(filter_var($ip, FILTER_VALIDATE_MAC));
+echo "<br>";
+?>
+>>>>>>> 79ab8834c19c6b83cc4d355b272c307db2065c7b
