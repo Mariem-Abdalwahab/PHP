@@ -171,4 +171,152 @@ echo "<br>";
 $handel  = fopen("text.txt", "a");
 fwrite($handel, " string from php ");
 fwrite($handel, "\rstring from php2 ", 6); // length
+
+/*
+File System Functions
+- Fopen(FileName[Required], Mode[Required], IncludePath[Optional], Context[Optional])
+
+--- [c]
+------ For Write
+------ Create If Not Exists
+------ No Problem If Its Exists
+------ No Truncation
+------ Pointer At The Beginning
+--- [c+] For Read &#038; Write
+
+- file(File[Required], Flag[Optional], Context[Optional])
+--- Read Entire File Into Array
+- feof(File[Required])      => end of file
+--- Tests For EOF On A File Pointer
+*/
+echo "<pre>";
+print_r(file("txt.txt"));
+echo "</pre>";
+echo "<br>";
+echo count(file("txt.txt"));
+echo "<br>";
+
+
+$handel = fopen("txt.txt", "r");
+
+while(!feof($handel)){
+    echo fgets($handel) . "<br>";
+}
+fclose($handel);
+echo "<hr>";
+
+/*
+File System Functions
+- Fopen(FileName[Required], Mode[Required], IncludePath[Optional], Context[Optional])
+
+- rewind(File[Required])
+--- Return The Pointer To The Beginning Of The File
+
+- ftell(File[Required])
+--- Return Current Position Of The Pointer
+
+- fseek(File[Required], Offset[Required], Whence[Optional] = SEEK_SET)
+--- Go To A Position
+--- Offset In Bytes
+--- SEEK_SET => Equal To Offset
+--- SEEK_CUR => Current + Offset
+--- SEEK_END => EOF + Offset [Accept Negative]
+*/
+
+$handel = fopen("txt.txt", "r");
+echo ftell($handel) . "<br>";
+
+echo fgets($handel) . "<br>";
+echo ftell($handel) . "<br>";
+
+rewind($handel); // return pointer to 0
+echo fgets($handel) . "<br>"; // line number two
+
+fseek($handel, 0);
+echo fgets($handel) . "<br>"; 
+
+echo ftell($handel) . "<br>";
+fseek($handel, 5,SEEK_CUR);
+
+echo fgets($handel) . "<br>"; 
+fclose($handel);
+
+echo "<hr>";
+
+/*
+File System Functions
+
+- glob(Pattern[Required], Flags[Optional])
+--- Find Pathnames Matching A Pattern And Return Array
+
+- rename(Old[Required], New[Required]) => Move
+--- Renames A File Or Directory
+
+- copy(Old[Required], New[Required], Context[Optional])
+--- Copy A File
+
+- unlink(File[Required], Context[Optional])
+--- Delete A File
+
+Same Concept
+- opendir()
+- readdir()
+- closedir()
+*/
+
+echo "<pre>";
+print_r(glob("*.*")); // all file with all extentios
+echo "</pre>";
+
+echo "<pre>";
+print_r(glob("oo/*.*")); // all file with all extentios in folder oo
+echo "</pre>";
+
+rename("oo/d.txt", "oo/test.txt"); // rename in the same place
+
+rename("oo/test.txt", "other/test2.txt"); // rename in other place
+
+rename("other/test2.txt", "oo/test2.txt"); // move to other place
+
+copy("oo/test2.txt", "other/test2.txt");   // copy without rename
+
+copy("oo/test2.txt", "other/test3copy.txt");   // copy with rename
+
+// delete("oo/test2.txt");
+echo "<hr>";
+/*
+    File System Functions
+
+    - file_get_contents(File[Required], Include_Path[Optional], Context[Optional], Start[Optional], MaxLength(Optional))
+    --- Reads Entire File Into A String
+
+    - file_put_contents(File[Required], Data[Required], Mode[Optional], Context[Optional])
+    --- Write Data To File
+    --- Mode
+    ------ FILE_APPEND => If File Exists Append To It
+
+    - Create If Not Exists
+    - Open And Close
+    - Return Number Of Bytes
+
+    Search
+    - Get Set Include Path
+
+*/
+echo file_get_contents("txt.txt");
+echo "<br>";
+
+echo get_include_path();
+echo "<br>";
+echo file_get_contents("txt.txt",true); // true => search in include path
+echo "<br>";
+echo file_get_contents("txt.txt",true, null, 4, 10); // search in include path
+echo "<br>";
+// echo file_get_contents("https://elzero.net/theme/"); 
+echo "<br>";
+file_put_contents("txt.txt", "from php"); // override the old content
+file_put_contents("txt.txt", "from php", FILE_APPEND); // add to the old content
+echo file_put_contents("txt.txt", " new from php", FILE_APPEND); // add to the old content
+
+echo "<hr>";
 ?>
